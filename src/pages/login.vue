@@ -78,6 +78,8 @@
   const loginWithGoogle = () => {
     window.location.href = 'https://localhost:3000/auth/google';
   };
+
+
 </script>
 
 <style scoped>

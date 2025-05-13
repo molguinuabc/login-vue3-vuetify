@@ -53,19 +53,20 @@
       }
 
       // Obtener datos del perfil del usuario
-      const response = await fetch('https://localhost:3000/usuario/profile', {
+      const response = await fetch('https://localhost:3000/user/profile', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
       });
-
       if (!response.ok) throw new Error('Error al obtener el perfil');
 
-      const userData = await response.json();
-      user.value = userData;
-      localStorage.setItem('user', JSON.stringify(userData));
+      user.value = (await response.json()).user;
+      console.log('Perfil del usuario:', user.value);
+
+      localStorage.setItem('user', JSON.stringify(user.value));
     } catch (error) {
       console.error('Error de autenticación:', error);
       router.push('/login');

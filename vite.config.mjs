@@ -7,7 +7,8 @@ import Vue from '@vitejs/plugin-vue'
 import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-
+import fs from 'fs'
+import path from 'path'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
@@ -76,9 +77,10 @@ export default defineConfig({
   },
   server: {
     port: 9000,
-    https: true,
-    host: '0.0.0.0',
-
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, 'certs/key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'certs/cert.pem')),
+    },
   },
   css: {
     preprocessorOptions: {
